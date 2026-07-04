@@ -34,5 +34,9 @@ the container at `/cypher`. Run one with:
 docker exec d4-theory-graph cypher-shell -u neo4j -p theorycraft -f /cypher/<script>.cypher
 ```
 
-Nothing is written here yet — the schema and the seed scripts (generated
-from `characters/` + `knowledge/`) are the next phase.
+Current scripts (see [`ontology.md`](ontology.md) for the model):
+
+- `00-schema.cypher` — uniqueness constraints
+- `10-classes-skills.cypher` — classes + active skills, GENERATED from
+  `data/d4data` by [`scripts/extract_skills_classes.py`](../scripts/extract_skills_classes.py);
+  re-run after each patch's data fetch, don't hand-edit
