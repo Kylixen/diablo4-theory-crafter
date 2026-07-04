@@ -16,6 +16,10 @@ the end result.
 - [`graph/`](graph/) — Neo4j knowledge graph over `characters/` +
   `knowledge/`, queried with Cypher. Runs locally via Docker; the Neo4j
   Browser is the exploration UI.
+- [`data/`](data/) — raw game data (skills, items, affixes, paragon) fetched
+  locally from [DiabloTools/d4data](https://github.com/DiabloTools/d4data)
+  via [`scripts/fetch-d4data.sh`](scripts/fetch-d4data.sh); gitignored, see
+  [`data/README.md`](data/README.md).
 
 ## Stack
 
