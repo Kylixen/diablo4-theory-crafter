@@ -13,26 +13,28 @@ query UI for streaming.
 
 ## Running
 
-Requires Docker.
+Any local Neo4j works. Primary setup is [Neo4j Desktop](https://neo4j.com/download/)
+with a local DBMS on the default ports; [`docker-compose.yml`](docker-compose.yml)
+remains as an alternative for anyone without Desktop (`cd graph && docker
+compose up -d`, login `neo4j`/`theorycraft`).
 
-```sh
-cd graph
-docker compose up -d
-```
-
-- Neo4j Browser: http://localhost:7474 (login `neo4j` / `theorycraft`)
-- Bolt (drivers, cypher-shell): `bolt://localhost:7687`
-
-Data persists in the `neo4j-data` Docker volume across restarts.
+- Neo4j Browser / HTTP: http://localhost:7474
+- Bolt: `bolt://localhost:7687`
 
 ## Loading the graph
 
-Cypher scripts live in [`cypher/`](cypher/) and are mounted read-only into
-the container at `/cypher`. Run one with:
+Cypher scripts live in [`cypher/`](cypher/), numbered by load order. Load
+them all with:
 
 ```sh
-docker exec d4-theory-graph cypher-shell -u neo4j -p theorycraft -f /cypher/<script>.cypher
+python3 scripts/load_graph.py
 ```
+
+Connection settings come from env vars or a gitignored `.env` in the repo
+root (`NEO4J_URL`, `NEO4J_USER`, `NEO4J_PASSWORD` — see the script header).
+The loader uses Neo4j's HTTP API, so it works the same against Desktop or
+Docker, no `cypher-shell` needed. Scripts are idempotent (`MERGE`-based) —
+re-running is safe.
 
 Current scripts (see [`ontology.md`](ontology.md) for the model):
 
