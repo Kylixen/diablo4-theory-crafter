@@ -1,26 +1,38 @@
 # Graph
 
-Rust workspace, two crates:
+Neo4j-backed knowledge graph over [`characters/`](../characters/) and
+[`knowledge/`](../knowledge/): builds, skills, items, and mechanics as nodes,
+with relationships like `USES`, `REQUIRES`, and `SYNERGIZES_WITH` — queried
+with Cypher to answer questions like "which uniques enable a Bone Spear
+build?"
 
-- `graph-core` — native binary (`build-graph`) that reads
-  [`characters/`](../characters/) and [`knowledge/`](../knowledge/) and
-  builds `data/graph.sqlite` (nodes/edges tables). Generated, not committed.
-- `graph-wasm` — compiled to `wasm32-unknown-unknown` via
-  [`sqlite-wasm-rs`](https://crates.io/crates/sqlite-wasm-rs), loads
-  `graph.sqlite` and answers queries client-side. Consumed by
-  [`site/`](../site/).
+Client-side/WASM exploration on GitHub Pages is parked as a future approach —
+see [issue #1](https://github.com/Kylixen/diablo4-theory-crafter/issues/1).
+For now Neo4j keeps things simple, with the built-in Neo4j Browser as the
+query UI for streaming.
 
-Neither crate's actual graph logic is implemented yet — this is a build
-scaffold (workspace + `Cargo.toml`s + stub entry points) to confirm the
-toolchain works before writing the real parsing/query code.
+## Running
 
-## Building
+Requires Docker.
 
-Requires a Rust toolchain (not yet installed in this environment) plus the
-`wasm32-unknown-unknown` target for `graph-wasm`:
-
+```sh
+cd graph
+docker compose up -d
 ```
-rustup target add wasm32-unknown-unknown
-cargo build -p graph-core
-cargo build -p graph-wasm --target wasm32-unknown-unknown
+
+- Neo4j Browser: http://localhost:7474 (login `neo4j` / `theorycraft`)
+- Bolt (drivers, cypher-shell): `bolt://localhost:7687`
+
+Data persists in the `neo4j-data` Docker volume across restarts.
+
+## Loading the graph
+
+Cypher scripts live in [`cypher/`](cypher/) and are mounted read-only into
+the container at `/cypher`. Run one with:
+
+```sh
+docker exec d4-theory-graph cypher-shell -u neo4j -p theorycraft -f /cypher/<script>.cypher
 ```
+
+Nothing is written here yet — the schema and the seed scripts (generated
+from `characters/` + `knowledge/`) are the next phase.

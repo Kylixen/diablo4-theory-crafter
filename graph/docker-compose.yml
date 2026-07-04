@@ -1,0 +1,15 @@
+services:
+  neo4j:
+    image: neo4j:5-community
+    container_name: d4-theory-graph
+    ports:
+      - "7474:7474" # HTTP — Neo4j Browser UI
+      - "7687:7687" # Bolt — drivers / cypher-shell
+    environment:
+      - NEO4J_AUTH=neo4j/theorycraft
+    volumes:
+      - neo4j-data:/data
+      - ./cypher:/cypher:ro
+
+volumes:
+  neo4j-data:
