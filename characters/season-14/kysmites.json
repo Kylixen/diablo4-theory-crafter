@@ -1,0 +1,41 @@
+{
+  "source": "https://maxroll.gg/d4/planner/pv28we0x",
+  "variant": "Variant 1",
+  "synced": "2026-07-04",
+  "plannerName": "KySmites",
+  "class": "Paladin",
+  "level": 70,
+  "worldTier": 2,
+  "season": 14,
+  "skillBar": [],
+  "skillTree": [
+    {
+      "power": "Paladin_Advance_lunge",
+      "rank": 1
+    }
+  ],
+  "raw": {
+    "items": {},
+    "paragon": {
+      "steps": [
+        {
+          "name": "Variant 1",
+          "data": [
+            {
+              "id": "Paragon_Paladin_00",
+              "nodes": {},
+              "rotation": 0,
+              "position": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          ]
+        }
+      ],
+      "position": 0
+    },
+    "spiritBoons": null,
+    "mercenary": null
+  }
+}

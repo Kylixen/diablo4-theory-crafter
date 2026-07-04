@@ -4,3 +4,4 @@ node_modules/
 target/
 data/d4data/
 .env
+data/maxroll-data.json
